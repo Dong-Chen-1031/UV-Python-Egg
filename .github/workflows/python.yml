@@ -46,10 +46,10 @@ jobs:
           password: ${{ secrets.REGISTRY_TOKEN || secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v6
         with:
-          context: ./python
-          file: ./python/${{ matrix.tag }}/Dockerfile
+          context: ./python_uv
+          file: ./python_uv/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:python_${{ matrix.tag }}
-            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:python_{0}', matrix.tag) || '' }}
+            ghcr.io/${{ steps.lower-repo.outputs.repository }}/yolks:python_uv_${{ matrix.tag }}
+            ${{ github.repository_owner == 'pelican-eggs' && format('ghcr.io/parkervcp/yolks:python_uv_{0}', matrix.tag) || '' }}
