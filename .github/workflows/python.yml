@@ -7,7 +7,7 @@ on:
     branches:
       - master
     paths:
-      - python_uv/**
+      - python_uv/3.*/**
 permissions:
   packages: write
 
