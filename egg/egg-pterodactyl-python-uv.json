@@ -4,7 +4,7 @@
         "version": "PTDL_v2",
         "update_url": null
     },
-    "exported_at": "2025-12-13T13:39:08+00:00",
+    "exported_at": "2025-12-13T14:38:00+00:00",
     "name": "python with uv",
     "author": "eggs@doong.me",
     "description": "A Python with uv Egg for Pelican & Pterodactyl\n\nEdit from: https://github.com/pelican-eggs/generic",
@@ -42,6 +42,16 @@
             "user_viewable": true,
             "user_editable": true,
             "rules": "nullable|string",
+            "field_type": "text"
+        },
+        {
+            "name": "Dependency Install Mode",
+            "description": "pip = uv pip install (uses Requirements file + Additional Python packages), sync = uv sync (uses pyproject.toml; ignores both).",
+            "env_variable": "DEPENDENCY_INSTALL_MODE",
+            "default_value": "pip",
+            "user_viewable": true,
+            "user_editable": true,
+            "rules": "required|string|in:pip,uv",
             "field_type": "text"
         },
         {
