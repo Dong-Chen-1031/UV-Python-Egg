@@ -1,4 +1,4 @@
-# uv Python Egg - An Extremely Fast Pterodactyl/Pelican Eggs and Yolks Images
+# UV Python Egg - An Extremely Fast Pterodactyl/Pelican Eggs and Yolks Images
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)

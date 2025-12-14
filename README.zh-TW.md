@@ -1,4 +1,4 @@
-# uv Python Egg - 一個極快的 Pterodactyl/Pelican Eggs 及 Yolks 映像 
+# UV Python Egg - 一個極快的 Pterodactyl/Pelican Eggs 及 Yolks 映像 
 
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
