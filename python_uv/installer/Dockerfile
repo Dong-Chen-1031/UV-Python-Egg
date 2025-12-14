@@ -5,10 +5,7 @@ LABEL       org.opencontainers.image.description="Installer image for Python UV 
 
 # Install all tools needed for git cloning and building Python packages
 RUN         apt update \
-            && apt -y install git curl jq file unzip make gcc g++ libtool ca-certificates \
-                              pkg-config libffi-dev libssl-dev zlib1g-dev libbz2-dev \
-                              libreadline-dev libsqlite3-dev libncurses5-dev libxml2-dev \
-                              libxmlsec1-dev liblzma-dev \
+            && apt -y install git curl jq file unzip make gcc g++ libtool \
             && apt clean \
             && rm -rf /var/lib/apt/lists/*
 
