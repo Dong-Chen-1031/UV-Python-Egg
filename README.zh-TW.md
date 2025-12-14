@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
 
-[English](README.md) | 中文(繁體)
+[English](README.md) | 繁體中文
 
 ## 特點
 - 比[普通的 Python Egg](https://github.com/pelican-eggs/generic/tree/main/python) 快 170+ 倍的伺服器安裝速度、10-100 倍的套件安裝速度。
@@ -43,7 +43,7 @@ https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/
 ### 部署您的應用程式
 
 匯入 egg 後：
-1. 使用「uv Python」egg 建立新伺服器
+1. 使用「UV Python」egg 建立新伺服器
 2. 從 Docker 映像下拉選單中選擇所需的 Python 版本
 3. 選擇 Dependency Install Mode：
    - **pip**（預設）：使用 requirements.txt + Additional Python packages，透過 `uv pip install`

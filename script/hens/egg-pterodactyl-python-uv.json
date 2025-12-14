@@ -5,9 +5,9 @@
         "update_url": null
     },
     "exported_at": "2025-12-13T06:36:48+00:00",
-    "name": "python with uv",
+    "name": "UV Python",
     "author": "eggs@doong.me",
-    "description": "A Python with uv Egg for Pelican & Pterodactyl\n\nEdit from: https:\/\/github.com\/pelican-eggs\/generic",
+    "description": "An Extremely Fast Pterodactyl/Pelican Eggs and Yolks Images\n\nGithub: https://github.com/Dong-Chen-1031/UV-Python-Egg",
     "features": null,
     "docker_images": {
         "Python 3.14": "ghcr.io\/dong-chen-1031\/yolks:python_uv_3.14",

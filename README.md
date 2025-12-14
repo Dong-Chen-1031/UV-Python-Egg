@@ -3,7 +3,7 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
 
-English | [中文(繁體)](README.zh-TW.md)
+English | [Traditional Chinese](README.zh-TW.md)
 
 ## Features
 - 170+ times faster server installation speed and 10-100 times faster package installation speed compared to [regular Python Egg](https://github.com/pelican-eggs/generic/tree/main/python).
@@ -41,7 +41,7 @@ https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/
 ### Deploy Your Application
 
 After importing the egg:
-1. Create a new server using the "uv Python" egg
+1. Create a new server using the "UV Python" egg
 2. Select your desired Python version from the Docker images dropdown
 3. Choose Dependency Install Mode:
    - **pip** (default): Uses requirements.txt + Additional Python packages via `uv pip install`
