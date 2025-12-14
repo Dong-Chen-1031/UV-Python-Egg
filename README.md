@@ -1,7 +1,7 @@
 # UV Python Egg - An Extremely Fast Pterodactyl/Pelican Eggs and Yolks Images
 
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/UV-Python-Egg/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/UV-Python-Egg/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
 
 English | [Traditional Chinese](README.zh-TW.md)
 
@@ -21,12 +21,12 @@ Choose the egg file based on your panel type:
 
 #### Pelican Panel (Recommended)
 ```
-https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-python-uv.json
+https://raw.githubusercontent.com/Dong-Chen-1031/UV-Python-Egg/refs/heads/master/egg/egg-python-uv.json
 ```
 
 #### Pterodactyl Panel
 ```
-https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-pterodactyl-python-uv.json
+https://raw.githubusercontent.com/Dong-Chen-1031/UV-Python-Egg/refs/heads/master/egg/egg-pterodactyl-python-uv.json
 ```
 
 **Import Steps:**
@@ -35,8 +35,8 @@ https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/
 3. Click import and the egg will be automatically configured
 
 **Alternative Downloads:**
-- [Pelican: egg-python-uv.json](https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-python-uv.json)
-- [Pterodactyl: egg-pterodactyl-python-uv.json](https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-pterodactyl-python-uv.json)
+- [Pelican: egg-python-uv.json](https://raw.githubusercontent.com/Dong-Chen-1031/UV-Python-Egg/refs/heads/master/egg/egg-python-uv.json)
+- [Pterodactyl: egg-pterodactyl-python-uv.json](https://raw.githubusercontent.com/Dong-Chen-1031/UV-Python-Egg/refs/heads/master/egg/egg-pterodactyl-python-uv.json)
 
 ### Deploy Your Application
 
@@ -202,7 +202,7 @@ python3 hen.py
 ## Project Structure
 
 ```
-yolks-uv/
+UV-Python-Egg/
 ├── .github/workflows/
 │   ├── python.yml          # Builds runtime images (3.8-3.14)
 │   ├── installer.yml       # Builds installer image
@@ -236,8 +236,8 @@ See [LICENSE.md](LICENSE.md) for details.
 
 ## Links
 
-- **Repository**: [Dong-Chen-1031/yolks-uv](https://github.com/Dong-Chen-1031/yolks-uv)
-- **Docker Images**: [ghcr.io/dong-chen-1031/yolks](https://github.com/Dong-Chen-1031/yolks-uv/pkgs/container/yolks)
+- **Repository**: [Dong-Chen-1031/UV-Python-Egg](https://github.com/Dong-Chen-1031/UV-Python-Egg)
+- **Docker Images**: [ghcr.io/dong-chen-1031/yolks](https://github.com/Dong-Chen-1031/UV-Python-Egg/pkgs/container/yolks)
 - **Upstream Projects**:
   - [Pelican Eggs](https://github.com/pelican-eggs)
   - [UV Package Manager](https://github.com/astral-sh/uv)
