@@ -1,13 +1,17 @@
-# Python with UV - Yolks Images & Pterodactyl/Pelican Eggs
+# uv Python Egg - An Extremely Fast Pterodactyl/Pelican Eggs and Yolks Images
 
-A complete solution for running Python applications on Pterodactyl/Pelican panels with modern tooling and automated workflows, consisting of:
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
 
-1. **Runtime Docker Images (Yolks)**: Python images (3.8-3.14) with UV package manager pre-installed for blazing-fast dependency management
-2. **Installer Docker Image**: Dedicated build environment with root access and all compilation dependencies pre-installed
-3. **Pterodactyl/Pelican Eggs**: Ready-to-use egg configurations based on [pelican-eggs/generic](https://github.com/pelican-eggs/generic), supporting both UV and traditional pip workflows
-4. **Automated Egg Generation**: Intelligent hen.py generator that automatically maintains egg configurations from templates
+English | [中文(繁體)](README.zh-TW.md)
 
-This project provides a modern, high-performance Python development environment with automatic dependency management, zero-permission issues, and fully automated CI/CD workflows.
+## Features
+- 170+ times faster server installation speed and 10-100 times faster package installation speed compared to [regular Python Egg](https://github.com/pelican-eggs/generic/tree/main/python).
+- Supports both traditional pip workflow and modern uv package management workflow.
+- Optimized installer container with pre-installed build dependencies to avoid wasting time on unnecessary installations.
+- Allows users to pull their own Python source code from GitHub repositories.
+
+![Optimized egg vs Python Egg](test/test.svg)
 
 ## Quick Start
 
@@ -15,18 +19,18 @@ This project provides a modern, high-performance Python development environment 
 
 Choose the egg file based on your panel type:
 
-#### For Pelican Panel (Recommended)
+#### Pelican Panel (Recommended)
 ```
 https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-python-uv.json
 ```
 
-#### For Pterodactyl Panel
+#### Pterodactyl Panel
 ```
 https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/egg-pterodactyl-python-uv.json
 ```
 
 **Import Steps:**
-1. In your admin panel, navigate to **Nests** → Select your nest → **Import Egg**
+1. In your admin panel, navigate to **Egg** → **Import Egg**
 2. Paste the appropriate URL above in the import field
 3. Click import and the egg will be automatically configured
 
@@ -37,49 +41,37 @@ https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/
 ### Deploy Your Application
 
 After importing the egg:
-1. Create a new server using the "Python with UV" egg
+1. Create a new server using the "uv Python" egg
 2. Select your desired Python version from the Docker images dropdown
-3. Configure your application:
-   - **Git Repo Address**: Your repository URL
-   - **App py file**: Your main Python file (default: `app.py`)
-   - **Requirements file**: Your requirements file (default: `requirements.txt`)
-4. Start your server and the application will automatically deploy
+3. Choose Dependency Install Mode:
+   - **pip** (default): Uses requirements.txt + Additional Python packages via `uv pip install`
+   - **uv**: Uses pyproject.toml + uv.lock via `uv sync`
+4. Configure other environment variables (such as GIT_ADDRESS, PY_FILE, etc.)
+5. Start your server and the application will automatically deploy
+>[!Tip]
+> After modifying the Git repository, the server needs to be reinstalled to apply the changes.
 
-## Components
+## How It Works
+This project's optimizations are mainly divided into two types:
+### 1. Using uv Package Manager to Accelerate Package Installation
+[uv](https://github.com/astral-sh/uv) is a drop-in replacement for pip that offers:
+- 10-100x faster package installation
+- Better dependency resolution
+- Improved caching mechanisms
+- Written in Rust for maximum performance
+### 2. Optimized Installer Container with Pre-installed Build Dependencies to Avoid Wasting Time on Unnecessary Installations
+#### [Python Generic Egg](https://github.com/pelican-eggs/generic/tree/main/python) Installation Process:
+- Uses `python:3.12-slim-bookworm` image as the installer container
+- Executes `apt-get install` in the installation script to install numerous build dependencies
+- Every installation requires re-downloading and installing these dependencies, resulting in excessively long installation times
+#### This Project's Installation Process:
+- Uses a dedicated `ghcr.io/dong-chen-1031/yolks:python_uv_installer` image as the installer container
+- This image comes pre-installed with all commonly used build dependencies
+- Avoids the need to re-download and install these dependencies with each installation, reducing installation time by approximately 170 times.
+> [!NOTE]
+> This dual-image architecture already exists, for example, Python Generic Egg uses `python:3.12-slim-bookworm` during installation and `ghcr.io/parkervcp/yolks:python_3.xx` during runtime, so there is no issue of extra installer image consuming storage space.
 
-### 1. Runtime Docker Images (Yolks)
-Pre-built Python images (3.8-3.14) with UV package manager, hosted on GitHub Container Registry. These lightweight images run as non-root user (`container:container`) for enhanced security and serve as the runtime environment for your Python applications.
-
-**Image URLs**: `ghcr.io/dong-chen-1031/yolks:python_uv_3.{8-14}`
-
-### 2. Installer Docker Image
-Dedicated installation-time container that runs with root privileges and includes all build dependencies pre-installed. This eliminates permission issues during package compilation and removes the need for apt commands in installation scripts.
-
-**Image URL**: `ghcr.io/dong-chen-1031/yolks:python_uv_installer`
-
-**Pre-installed Dependencies**:
-- Base tools: git, curl, jq, file, unzip, make, gcc, g++, libtool, ca-certificates
-- Compilation libraries: pkg-config, libffi-dev, libssl-dev, zlib1g-dev, libbz2-dev, libreadline-dev, libsqlite3-dev, libncurses5-dev, libxml2-dev, libxmlsec1-dev, liblzma-dev
-
-### 3. Pterodactyl/Pelican Eggs
-Complete egg configuration files that leverage the dual-container architecture:
-- **Installation Phase**: Uses `python_uv_installer` (root, all dependencies)
-- **Runtime Phase**: Uses version-specific images (non-root, secure)
-
-Available eggs:
-- **Pelican Panel** (PLCN_v3): [egg-python-uv.json](egg/egg-python-uv.json)
-- **Pterodactyl Panel** (PTDL_v2): [egg-pterodactyl-python-uv.json](egg/egg-pterodactyl-python-uv.json)
-
-### 4. Automated Egg Generation (hen.py)
-Intelligent automation system that generates eggs from templates and scripts:
-- **Templates**: [script/hens/](script/hens/) - Egg templates for both Pelican and Pterodactyl formats
-- **Scripts**: [script/install.sh](script/install.sh), [script/start.sh](script/start.sh) - Installation and startup logic
-- **Generator**: [script/hen.py](script/hen.py) - Automatically injects scripts into templates with format-specific escaping
-- **Output**: [egg/](egg/) - Final generated eggs ready for distribution
-
-The generator handles format differences automatically:
-- Pelican: Standard JSON escaping, `startup_commands.Default` field
-- Pterodactyl: `\r\n` newlines, backslash escaping, `startup` field
+Through these two optimization methods, the deployment speed and performance of Python applications on Pterodactyl and Pelican panels are significantly improved.
 
 ## Features
 
@@ -92,25 +84,13 @@ The generator handles format differences automatically:
 - **Multi-Architecture**: Available for both `linux/amd64` and `linux/arm64`
 
 ### Security & Reliability
-- **Dual-Container Architecture**: 
-  - Installation uses root container with all dependencies
-  - Runtime uses non-root container for enhanced security
-- **No Permission Issues**: Pre-installed build dependencies eliminate `apt` permission errors
-- **Isolated Environments**: Each project runs in its own container with proper isolation
+- Installation uses root container with all dependencies
+- Runtime uses non-root container for enhanced security
 
 ### Developer Experience
 - **Auto-Updates**: Built-in support for git repository auto-updates on startup
 - **Flexible Dependency Management**: Support for requirements.txt, pyproject.toml, or direct package installation
-- **Zero Manual Maintenance**: Automated egg generation via hen.py keeps configurations in sync
-- **CI/CD Ready**: GitHub Actions workflows automatically build images and generate eggs
-
-## Why UV?
-
-[UV](https://github.com/astral-sh/uv) is a drop-in replacement for pip that offers:
-- 10-100x faster package installation
-- Better dependency resolution
-- Improved caching mechanisms
-- Written in Rust for maximum performance
+- **CI/CD Ready**: GitHub Actions workflows automatically build images periodically and rebuild regularly to ensure the latest dependencies are used.
 
 ## Configuration Options
 
@@ -121,7 +101,7 @@ The eggs support comprehensive configuration through environment variables:
 - **BRANCH**: Specific branch to clone (optional, defaults to repo's default branch)
 - **USERNAME/ACCESS_TOKEN**: Git authentication credentials (for private repos)
 - **AUTO_UPDATE**: Enable automatic git pull on startup (`0` = disabled, `1` = enabled)
-- **USER_UPLOAD**: Skip git cloning if you're uploading files manually (`0` = false, `1` = true)
+- **USER_UPLOAD**: Skip the entire installation script if you're uploading files manually
 
 ### Python Configuration
 - **PY_FILE**: Main Python file to execute (default: `app.py`)
@@ -138,6 +118,9 @@ When using uv mode, dependencies are managed through:
 - **pyproject.toml**: Project configuration and direct dependencies
 - **uv.lock**: Locked dependency versions (auto-generated by uv)
 - Environment: `/home/container/.local/uv` (set via UV_PROJECT_ENVIRONMENT)
+
+> [!WARNING]  
+> When using uv mode, the Python version settings in pyproject.toml will not be applied. Please ensure your project is compatible with the selected runtime image version.
 
 
 ## Available Images
@@ -165,61 +148,9 @@ All images are hosted on GitHub Container Registry (ghcr.io) and built for both 
 
 * [`python_uv_installer`](/python_uv/installer) - Dedicated installation environment
   * `ghcr.io/dong-chen-1031/yolks:python_uv_installer`
-  * Based on Python 3.13 with all build dependencies
+  * Based on Python 3.12 with all build dependencies
   * Runs as root for package compilation
   * Used during egg installation phase only
-
-## Installation & Startup Flow
-
-### Installation Phase (First-Time Setup)
-
-The installation script runs in the `python_uv_installer` container with root privileges:
-
-1. **Repository Cloning**
-   - Clones your git repository to `/mnt/server`
-   - Supports authentication via USERNAME/ACCESS_TOKEN
-   - Handles branch selection
-
-2. **Dependency Installation** (based on DEPENDENCY_INSTALL_MODE)
-   
-   **pip mode** (traditional):
-   ```bash
-   uv pip install -U --prefix .local ${PY_PACKAGES}
-   uv pip install -U --prefix .local -r requirements.txt
-   ```
-   
-   **uv mode** (modern):
-   ```bash
-   uv sync  # Uses pyproject.toml + uv.lock
-   ```
-
-### Runtime Phase (Every Startup)
-
-The startup script runs in the version-specific runtime container as non-root user:
-
-1. **Auto-Update** (if enabled)
-   - Pulls latest changes from git repository
-   
-2. **Application Launch** (based on DEPENDENCY_INSTALL_MODE)
-   
-   **pip mode**:
-   ```bash
-   export PATH=/home/container/.local/bin:$PATH
-   export PYTHONPATH=/home/container/.local
-   python ${PY_FILE}
-   ```
-   
-   **uv mode**:
-   ```bash
-   export UV_PROJECT_ENVIRONMENT="/home/container/.local/uv"
-   uv run ${PY_FILE}
-   ```
-
-### Why Dual Containers?
-
-- **Installation**: Needs root access to compile packages with C extensions (cryptography, lxml, etc.)
-- **Runtime**: Runs as non-root for security (Pterodactyl/Pelican best practice)
-- **Separation of Concerns**: Build dependencies don't bloat runtime images
 
 ## Building & Development
 
@@ -293,100 +224,13 @@ yolks-uv/
 └── README.md
 ```
 
-### Key Concepts
-
-- **Templates (hens/)**: Source of truth for egg metadata, variables, and structure
-- **Scripts (*.sh)**: Reusable installation and startup logic
-- **Generator (hen.py)**: Injects scripts into templates with proper escaping
-- **Output (egg/)**: Final eggs ready for import (auto-generated, never edited manually)
-
-The "hen" metaphor: A mother hen (hen.py) lays eggs from templates and scripts 🐔→🥚
-
-## Contributing
-
-Contributions are welcome! Here's how to add features:
-
-### Adding a New Python Version
-
-1. Create directory: `python_uv/3.XX/`
-2. Add Dockerfile based on existing versions
-3. Update `.github/workflows/python.yml` matrix:
-   ```yaml
-   python-version: ['3.8', '3.9', '3.10', '3.11', '3.12', '3.13', '3.14', '3.XX']
-   ```
-4. Update egg templates in `script/hens/` to include new version in `docker_images`
-5. Run `hen.py` to regenerate eggs
-6. Update README with new version
-
-### Modifying Installation/Startup Logic
-
-1. Edit `script/install.sh` or `script/start.sh`
-2. Test changes locally
-3. Run `python3 script/hen.py` to regenerate eggs
-4. Verify generated eggs in `egg/` directory
-5. Push changes - GitHub Actions will auto-update eggs
-
-### Adding Build Dependencies
-
-Edit `python_uv/installer/Dockerfile` and add packages to the `apt-get install` command.
-
-### Updating Egg Variables
-
-Edit templates in `script/hens/`:
-- `egg-python-uv.json` for Pelican (PLCN_v3 format)
-- `egg-pterodactyl-python-uv.json` for Pterodactyl (PTDL_v2 format)
-
-Then regenerate with `hen.py`.
-
-## Troubleshooting
-
-### Common Issues
-
-#### Permission Denied During Installation
-**Solution**: Ensure you're using the latest egg which uses `python_uv_installer` as the installation container. This container runs as root and has all necessary permissions.
-
-#### Packages Fail to Compile
-**Solution**: Check if the required compilation libraries are in `python_uv/installer/Dockerfile`. Common missing libraries can be added to the apt-get install command.
-
-#### UV Mode Not Working
-**Solution**: Ensure you have both `pyproject.toml` and `uv.lock` in your repository. Set `DEPENDENCY_INSTALL_MODE=uv` in the egg configuration.
-
-#### Auto-Update Not Pulling Latest Changes
-**Solution**: Set `AUTO_UPDATE=1` and ensure your git repository is accessible. For private repos, configure USERNAME and ACCESS_TOKEN.
-
-#### Generated Eggs Don't Match Templates
-**Solution**: Run `python3 script/hen.py` locally to regenerate. Never edit files in `egg/` directly - they're overwritten by automation.
-
-## FAQ
-
-**Q: What's the difference between pip mode and uv mode?**
-- **pip mode**: Traditional workflow with requirements.txt, compatible with existing projects
-- **uv mode**: Modern approach using pyproject.toml + uv.lock for reproducible builds
-
-**Q: Why separate installer and runtime images?**
-- Security: Runtime runs as non-root user
-- Efficiency: Build tools don't bloat runtime images  
-- Reliability: Root access during installation prevents permission errors
-
-**Q: Can I use this with private GitHub repositories?**
-Yes! Set the USERNAME and ACCESS_TOKEN variables in your egg configuration.
-
-**Q: Why is it called "hen.py"?**
-A mother hen lays eggs! 🐔 The generator (hen.py) creates eggs from templates (hens/) and scripts.
-
-**Q: Do I need to manually update eggs after changing scripts?**
-No! GitHub Actions automatically runs hen.py and commits updated eggs when scripts change.
-
-**Q: Which Python version should I use?**
-Use the latest stable version (3.13) unless you have specific compatibility requirements. All versions 3.8-3.14 are supported.
-
 ## License
 
 See [LICENSE.md](LICENSE.md) for details.
 
 ## Credits
 
-- **Docker Images**: Based on [Pelican Eggs Yolks](https://github.com/pelican-eggs/yolks) with UV integration
+- **Yolks**: Based on [Pelican Eggs Yolks](https://github.com/pelican-eggs/yolks) with UV integration
 - **Egg Configuration**: Based on [Pelican Eggs Generic](https://github.com/pelican-eggs/generic) with enhanced UV support
 - **UV Package Manager**: [astral-sh/uv](https://github.com/astral-sh/uv) - An extremely fast Python package installer and resolver
 
@@ -397,8 +241,4 @@ See [LICENSE.md](LICENSE.md) for details.
 - **Upstream Projects**:
   - [Pelican Eggs](https://github.com/pelican-eggs)
   - [UV Package Manager](https://github.com/astral-sh/uv)
-  - [Pterodactyl Panel](https://pterodactyl.io/)
-
----
-
-**Made with 🐔 by the hen.py automation system**
+  - [Pelican Panel](https://pelican.dev/)

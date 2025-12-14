@@ -3,6 +3,8 @@
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/python.yml?branch=master&label=Build%20Runtime%20Images&style=flat-square)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/Dong-Chen-1031/yolks-uv/installer.yml?branch=master&label=Build%20Installer%20Image&style=flat-square)
 
+[English](README.md) | 中文(繁體)
+
 ## 特點
 - 比[普通的 Python Egg](https://github.com/pelican-eggs/generic/tree/main/python) 快 170+ 倍的伺服器安裝速度、10-100 倍的套件安裝速度。
 - 同時支援傳統的 pip 工作流程和現代的 uv 套件管理流程。
@@ -48,6 +50,7 @@ https://raw.githubusercontent.com/Dong-Chen-1031/yolks-uv/refs/heads/master/egg/
    - **uv**：使用 pyproject.toml + uv.lock，透過 `uv sync`
 4. 配置其他環境變數（如 GIT_ADDRESS、PY_FILE 等）
 5. 啟動您的伺服器，應用程式將自動部署
+>[!TIP]
 > 請注意，修改 Git 儲存庫後，伺服器需要重新安裝以應用變更。
 
 ## 原理
@@ -146,7 +149,7 @@ eggs 透過環境變數支援全面的配置：
 
 * [`python_uv_installer`](/python_uv/installer) - 專用安裝環境
   * `ghcr.io/dong-chen-1031/yolks:python_uv_installer`
-  * 基於 Python 3.13，包含所有建置依賴
+  * 基於 Python 3.12，包含所有建置依賴
   * 以 root 身份執行以進行套件編譯
   * 僅在 egg 安裝階段使用
 
