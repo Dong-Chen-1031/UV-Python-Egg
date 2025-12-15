@@ -122,7 +122,7 @@ eggs 透過環境變數支援全面的配置：
 - 環境：`/home/container/.local/uv`（透過 UV_PROJECT_ENVIRONMENT 設定）
   
 > [!WARNING]  
-> 使用 uv 模式時，pyproject.toml中的 Python 版本設定不會被應用，請確保您的專案與所選的運行時映像版本相容。
+> 使用 uv 模式時，pyproject.toml 中的 Python 版本設定不會被應用，請確保您的專案與所選的運行時映像版本相容。
 
 ## 可用映像
 
